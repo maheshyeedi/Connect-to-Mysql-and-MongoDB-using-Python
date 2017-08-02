@@ -1,0 +1,77 @@
+#connect to MySQL DB and inserting records into predefined Employees table
+import mysql.connector
+#
+cnx= mysql.connector.connect(user='root',password='password',database='pythondb',host='localhost')
+
+#SQL query into cursor
+cursor = cnx.cursor()
+
+query=("INSERT INTO employees(personid,lastname,firstname,city,department,gender)""VALUES(%s, %s, %s, %s, %s, %s)")
+data_emp =('2017','python','mongodb','bangalore','dev','male')
+
+#insert new employee record
+cursor.execute(query,data_emp)
+
+#Data is commited to Database
+cnx.commit()
+
+for (lastname,firstname) in cursor:
+	print("{0},{1} were working in {2}".format(lastname,firstname,department))
+
+#close connection
+cursor.close()
+cnx.close()
+
+
+
+# Connect to MySQL and retrieving data insert
+
+import mysql
+import mysql.connector
+
+#creating a connection
+cnx= mysql.connector.connect(user='root',password='password',database='pythondb',host='localhost')
+
+
+cursor = cnx.cursor()
+
+query=("SELECT lastname,firstname,department ""FROM employees")
+
+#SQL query execution
+cursor.execute(query)
+print (cursor.fetchall())  # 2nd method to print the values
+
+#Data is commited to Database
+cnx.commit()
+
+for (lastname,firstname,department) in cursor:
+	print("{0} {1} were working in {2}".format(lastname,firstname,department))
+
+#close connection
+cursor.close()
+cnx.close()
+
+
+
+
+#Create connection to MongoDB from Pythong then inserting data 
+
+import pymongo
+from pymongo import MongoClient
+client = MongoClient('localhost:27017')
+Pythondb = client.Pythondb
+Employees = Pythondb.Employees
+
+#data inserting
+myrecord ={"id":"0001","name":"Mongodb","age":"05","Dept":"IT","country":"India"}
+
+# find data
+query = Employees.find({})
+
+query1 = Pythondb.Employees.insert(myrecord)
+
+#print data
+for doc in query:
+    print(doc)
+
+print("Inserted doc ID = ",query1)
